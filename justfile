@@ -8,10 +8,10 @@ fmt:
     taplo fmt
     cargo fmt
 
-amend:
+amend: fmt check
     git commit -a --amend --no-edit
 
-commit message: fmt
+commit message: fmt check
     git commit -a -m "{{message}}"
 
 push:
