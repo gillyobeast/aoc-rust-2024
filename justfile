@@ -19,6 +19,7 @@ add:
 
 push:
     #!/usr/bin/env zsh
-    if read -sq "choice?Press Y/y to continue with push"; then
+    if read -sq "choice?Confirm push with 'y'"; then
+        echo
         git push
     fi
