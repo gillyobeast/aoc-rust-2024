@@ -5,7 +5,7 @@ today:
     cargo today
 
 check:
-    cargo clippy --all-targets
+    cargo clippy --workspace --all-targets --tests -- -Dwarnings
 
 fmt:
     taplo fmt
