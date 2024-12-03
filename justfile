@@ -9,4 +9,10 @@ fmt:
     cargo fmt
 
 amend:
-    git commit -a --amend
+    git commit -a --amend --no-edit
+
+commit message: fmt
+    git commit -a -m "{{message}}"
+
+push:
+    git push
