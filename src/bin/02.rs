@@ -1,13 +1,11 @@
 advent_of_code::solution!(2);
-
-pub fn part_one(input: &str) -> Option<usize> {
-
+use anyhow::Result;
+pub fn part_one(input: &str) -> Result<usize> {
     let lines = parse(input);
 
     let count = lines.into_iter().filter(is_safe).count();
-    Some(count)
+    Ok(count)
 }
-
 
 fn is_safe(line: &Vec<usize>) -> bool {
     let mut forward = line.clone();
@@ -17,10 +15,10 @@ fn is_safe(line: &Vec<usize>) -> bool {
     backward.reverse();
     ((line == &forward) || (line == &backward))
         && line
-        .windows(2)
-        .all(|a| (1..=3).contains(&a[0].abs_diff(a[1])))
+            .windows(2)
+            .all(|a| (1..=3).contains(&a[0].abs_diff(a[1])))
 }
-pub fn part_two(input: &str) -> Option<usize> {
+pub fn part_two(input: &str) -> Result<usize> {
     let lines = parse(input);
 
     let count = lines
@@ -28,7 +26,7 @@ pub fn part_two(input: &str) -> Option<usize> {
         .filter(|line| subsets(line).iter().any(is_safe))
         .count();
 
-    Some(count)
+    Ok(count)
 }
 
 fn subsets(line: &[usize]) -> Vec<Vec<usize>> {
@@ -53,19 +51,24 @@ fn get_ints(line: &str) -> Vec<usize> {
         .map(|i| i.parse().unwrap())
         .collect()
 }
+
 #[cfg(test)]
 mod tests {
     use super::*;
 
     #[test]
-    fn test_part_one() {
-        let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, Some(2));
+    fn test_part_one() -> Result<()> {
+        let result = part_one(&advent_of_code::template::read_file("examples", DAY))?;
+        assert_eq!(result, 2);
+
+        Ok(())
     }
 
     #[test]
-    fn test_part_two() {
-        let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, Some(4));
+    fn test_part_two() -> Result<()> {
+        let result = part_two(&advent_of_code::template::read_file("examples", DAY))?;
+        assert_eq!(result, 4);
+
+        Ok(())
     }
 }

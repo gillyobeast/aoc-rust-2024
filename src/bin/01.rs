@@ -1,6 +1,7 @@
 advent_of_code::solution!(1);
+use anyhow::Result;
 
-pub fn part_one(input: &str) -> Option<usize> {
+pub fn part_one(input: &str) -> Result<usize> {
     let (mut first, mut second) = parse(input);
 
     first.sort();
@@ -16,10 +17,10 @@ pub fn part_one(input: &str) -> Option<usize> {
         distance += difference;
     }
 
-    Some(distance)
+    Ok(distance)
 }
 
-pub fn part_two(input: &str) -> Option<usize> {
+pub fn part_two(input: &str) -> Result<usize> {
     let (first, second) = parse(input);
     let mut similarity = 0;
     for i in 0..first.len() {
@@ -29,7 +30,7 @@ pub fn part_two(input: &str) -> Option<usize> {
         // println!("{new} = {count} * {first}");
         similarity += new;
     }
-    Some(similarity)
+    Ok(similarity)
 }
 
 fn parse(input: impl AsRef<str> + Sized) -> (Vec<usize>, Vec<usize>) {
@@ -53,14 +54,17 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_part_one() {
-        let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, Some(11));
+    fn test_part_one()  -> Result<()>{
+        let result = part_one(&advent_of_code::template::read_file("examples", DAY))?;
+        assert_eq!(result, 11);
+
+        Ok(())
     }
 
     #[test]
-    fn test_part_two() {
-        let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, Some(31));
+    fn test_part_two() -> Result<()>{
+        let result = part_two(&advent_of_code::template::read_file("examples", DAY))?;
+        assert_eq!(result, 31);
+        Ok(())
     }
 }

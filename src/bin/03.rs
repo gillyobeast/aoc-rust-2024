@@ -1,10 +1,11 @@
 advent_of_code::solution!(3);
+use anyhow::Result;
 
-pub fn part_one(input: &str) -> Option<usize> {
+pub fn part_one(input: &str) -> Result<usize> {
     unimplemented!()
 }
 
-pub fn part_two(input: &str) -> Option<usize> {
+pub fn part_two(input: &str) -> Result<usize> {
     unimplemented!()
 }
 
@@ -13,14 +14,18 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_part_one() {
-        let result = part_one(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+    fn test_part_one() -> Result<()> {
+        let result = part_one(&advent_of_code::template::read_file("examples", DAY))?;
+        assert_eq!(result, 0);
+
+        Ok(())
     }
 
     #[test]
-    fn test_part_two() {
-        let result = part_two(&advent_of_code::template::read_file("examples", DAY));
-        assert_eq!(result, None);
+    fn test_part_two() -> Result<()> {
+        let result = part_two(&advent_of_code::template::read_file("examples", DAY))?;
+        assert_eq!(result, 0);
+
+        Ok(())
     }
 }
