@@ -18,4 +18,7 @@ add:
     git add .
 
 push:
-    git push
+    #!/usr/bin/env zsh
+    if read -sq "choice?Press Y/y to continue with push"; then
+        git push
+    fi
