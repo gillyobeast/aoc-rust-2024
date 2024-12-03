@@ -15,7 +15,7 @@ commit message: fmt check add
     git commit -a -m "{{message}}"
 
 add:
-    git add
+    git add .
 
 push:
     git push
