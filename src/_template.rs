@@ -1,11 +1,11 @@
 advent_of_code::solution!(%DAY_NUMBER%);
 
 pub fn part_one(input: &str) -> Option<usize> {
-    None
+    unimplemented!()
 }
 
 pub fn part_two(input: &str) -> Option<usize> {
-    None
+    unimplemented!()
 }
 
 #[cfg(test)]
