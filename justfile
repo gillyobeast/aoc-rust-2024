@@ -1,6 +1,9 @@
 default:
     just --choose
 
+today:
+    cargo today
+
 check:
     cargo clippy --all-targets
 
@@ -12,7 +15,7 @@ amend: fmt check add
     git commit -a --amend --no-edit
 
 commit message: fmt check add
-    git commit -a -m "{{message}}"
+    git commit -a -m "{{ message }}"
 
 add:
     git add .
