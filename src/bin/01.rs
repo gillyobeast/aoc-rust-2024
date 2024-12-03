@@ -54,7 +54,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_part_one()  -> Result<()>{
+    fn test_part_one() -> Result<()> {
         let result = part_one(&advent_of_code::template::read_file("examples", DAY))?;
         assert_eq!(result, 11);
 
@@ -62,7 +62,7 @@ mod tests {
     }
 
     #[test]
-    fn test_part_two() -> Result<()>{
+    fn test_part_two() -> Result<()> {
         let result = part_two(&advent_of_code::template::read_file("examples", DAY))?;
         assert_eq!(result, 31);
         Ok(())

@@ -23,7 +23,8 @@ pub fn part_two(input: &str) -> Result<usize> {
             }
         }
     }
-    Ok(total)}
+    Ok(total)
+}
 
 fn sum_matches(input: &str, re: &Regex) -> Result<usize> {
     let mut total = 0;
