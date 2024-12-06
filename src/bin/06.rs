@@ -1,5 +1,5 @@
 advent_of_code::solution!(6);
-use advent_of_code::matrix::parse_matrix;
+use advent_of_code::matrix::Matrix;
 use anyhow::Result;
 
 // ....#.....
@@ -13,7 +13,10 @@ use anyhow::Result;
 // #.........
 // ......#...
 pub fn part_one(input: &str) -> Result<usize> {
-    let _map: Vec<_> = parse_matrix(input);
+    let matrix: Matrix = Matrix::parse(input);
+    println!("{:?}", matrix);
+    println!("{:?}", matrix.clone().rotate());
+    println!("{:?}", matrix.rotate().rotate());
     unimplemented!()
 }
 
