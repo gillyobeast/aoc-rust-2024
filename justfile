@@ -22,6 +22,8 @@ add:
 
 push:
     #!/usr/bin/env zsh
+    echo "Commits:"
+    git rev-list --oneline --color=always origin..HEAD | sed 's/^/  - /'
     if read -sq "choice?Confirm push with 'y'"; then
         echo
         git push
