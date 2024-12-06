@@ -3,10 +3,15 @@ use advent_of_code::table::Table;
 use anyhow::Result;
 
 pub fn part_one(input: &str) -> Result<usize> {
-    let matrix: Table = Table::parse(input);
-    println!("{:?}", matrix);
-    println!("{:?}", matrix.clone().rotate());
-    println!("{:?}", matrix.rotate().rotate());
+    // first rotate the table so the cursor moves right through the row
+    let table: Table = Table::parse(input).rotate();
+    dbg!(table);
+    // then recurse:
+    // base case: the cursor does not meet a # => add spaces left in row to visited; break
+    // recursive case: cursor does meet a # =>
+    //      add spaces between cursor and # to visited;
+    //      move cursor to before #;
+    //      rotate; recurse
     unimplemented!()
 }
 
