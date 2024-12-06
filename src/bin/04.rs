@@ -1,4 +1,5 @@
 advent_of_code::solution!(4);
+use advent_of_code::matrix::parse_matrix;
 use anyhow::Result;
 
 pub fn part_one(input: &str) -> Result<usize> {
@@ -8,7 +9,7 @@ pub fn part_one(input: &str) -> Result<usize> {
 }
 
 fn parse(input: &str) -> Vec<Vec<char>> {
-    let matrix = input.lines().map(|line| line.chars().collect()).collect();
+    let matrix = parse_matrix(input);
     dbg!(matrix)
 }
 
