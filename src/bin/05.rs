@@ -1,11 +1,11 @@
 advent_of_code::solution!(5);
 use anyhow::Result;
 
-pub fn part_one(input: &str) -> Result<usize> {
+pub fn part_one(_input: &str) -> Result<usize> {
     unimplemented!()
 }
 
-pub fn part_two(input: &str) -> Result<usize> {
+pub fn part_two(_input: &str) -> Result<usize> {
     unimplemented!()
 }
 

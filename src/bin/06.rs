@@ -1,26 +1,16 @@
 advent_of_code::solution!(6);
-use advent_of_code::matrix::Matrix;
+use advent_of_code::table::Table;
 use anyhow::Result;
 
-// ....#.....
-// .........#
-// ..........
-// ..#.......
-// .......#..
-// ..........
-// .#..^.....
-// ........#.
-// #.........
-// ......#...
 pub fn part_one(input: &str) -> Result<usize> {
-    let matrix: Matrix = Matrix::parse(input);
+    let matrix: Table = Table::parse(input);
     println!("{:?}", matrix);
     println!("{:?}", matrix.clone().rotate());
     println!("{:?}", matrix.rotate().rotate());
     unimplemented!()
 }
 
-pub fn part_two(input: &str) -> Result<usize> {
+pub fn part_two(_input: &str) -> Result<usize> {
     unimplemented!()
 }
 

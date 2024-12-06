@@ -1,9 +1,9 @@
 advent_of_code::solution!(4);
-use advent_of_code::matrix::Matrix;
+use advent_of_code::table::Table;
 use anyhow::Result;
 
 pub fn part_one(input: &str) -> Result<usize> {
-    let _matrix = Matrix::parse(input);
+    let _matrix = Table::parse(input);
 
     unimplemented!()
 }

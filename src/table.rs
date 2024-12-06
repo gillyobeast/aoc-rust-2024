@@ -2,11 +2,11 @@ use std::fmt::{Debug, Formatter};
 use std::str::Chars;
 
 #[derive(Clone, PartialEq)]
-pub struct Matrix {
+pub struct Table {
     inner: Vec<Vec<char>>,
 }
 
-impl Debug for Matrix {
+impl Debug for Table {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let mut out = "".to_string();
         for row in &self.inner {
@@ -20,7 +20,7 @@ impl Debug for Matrix {
     }
 }
 
-impl Matrix {
+impl Table {
     pub fn parse(input: &str) -> Self {
         Self {
             inner: input
@@ -77,8 +77,8 @@ mod tests {
                 #.........
                 ......#...";
             assert_eq!(
-                Matrix::parse(input),
-                Matrix {
+                Table::parse(input),
+                Table {
                     inner: vec![
                         vec!['.', '.', '.', '.', '#', '.', '.', '.', '.', '.'],
                         vec!['.', '.', '.', '.', '.', '.', '.', '.', '.', '#'],
@@ -104,11 +104,11 @@ mod tests {
         #[test]
         fn it_can_rotate_a_matrix() -> Result<()> {
             assert_eq!(
-                Matrix {
+                Table {
                     inner: vec![vec!['a', 'b', 'c'], vec!['d', 'e', 'f']]
                 }
                 .rotate(),
-                Matrix {
+                Table {
                     inner: vec![vec!['d', 'a'], vec!['e', 'b'], vec!['f', 'c']]
                 }
             );
@@ -117,12 +117,12 @@ mod tests {
 
         #[test]
         fn it_can_rotate_a_huge_matrix() -> Result<()> {
-            let m1 = Matrix::parse(
+            let m1 = Table::parse(
                 "a b c d e f g h i j k l m
                         n o p q r s t u v w x y z",
             );
 
-            let m2 = Matrix::parse(
+            let m2 = Table::parse(
                 "n a
                         o b
                         p c
@@ -143,7 +143,7 @@ mod tests {
         /// rotating 4 times returns original
         #[test]
         fn it_rotating_4_times_returns_original() -> Result<()> {
-            let matrix = Matrix::parse(
+            let matrix = Table::parse(
                 "a b c d e f g
                 h i j k l m n",
             );
