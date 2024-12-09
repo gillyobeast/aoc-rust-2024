@@ -1,14 +1,23 @@
 use std::fmt::{Debug, Formatter};
+use std::slice::Iter;
 use std::str::Chars;
 
 #[derive(Clone, PartialEq)]
 pub struct Table {
-    inner: Vec<Vec<char>>,
+    pub inner: Vec<Vec<char>>,
+}
+
+impl Table {
+    pub fn empty((rows, columns): (usize, usize)) -> Table {
+        Table {
+            inner: vec![vec!['.'; rows]; columns],
+        }
+    }
 }
 
 impl Debug for Table {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
-        let mut out = "".to_string();
+        let mut out = "\n".to_string();
         for row in &self.inner {
             for column in row {
                 out += column.to_string().as_ref()
@@ -16,11 +25,15 @@ impl Debug for Table {
             out += "\n";
         }
 
-        f.write_str(&*out)
+        f.write_str(&out)
     }
 }
 
 impl Table {
+    pub fn iter(&self) -> Iter<Vec<char>> {
+        self.inner.iter()
+    }
+
     pub fn parse(input: &str) -> Self {
         Self {
             inner: input
@@ -34,20 +47,20 @@ impl Table {
         }
     }
 
-    pub fn rotate(self) -> Self {
+    pub fn rotated(self) -> Self {
         let (rows, columns) = self.dimensions();
         let matrix = self.inner;
 
-        let mut result = vec![vec!['0'; rows]; columns];
+        let mut result = Self::empty((rows, columns));
         for row_num in 0..rows {
-            for col_num in 0..columns {
-                result[col_num][row_num] = matrix[rows - 1 - row_num][col_num]
+            for (col_num, column) in result.inner.iter_mut().enumerate().take(columns) {
+                column[row_num] = matrix[rows - 1 - row_num][col_num]
             }
         }
-        Self { inner: result }
+        result
     }
 
-    fn dimensions(&self) -> (usize, usize) {
+    pub fn dimensions(&self) -> (usize, usize) {
         let len_0 = self.inner[0].len();
         for i in 1..self.inner.len() {
             assert_eq!(len_0, self.inner[i].len())
@@ -107,7 +120,7 @@ mod tests {
                 Table {
                     inner: vec![vec!['a', 'b', 'c'], vec!['d', 'e', 'f']]
                 }
-                .rotate(),
+                .rotated(),
                 Table {
                     inner: vec![vec!['d', 'a'], vec!['e', 'b'], vec!['f', 'c']]
                 }
@@ -137,7 +150,7 @@ mod tests {
                         y l
                         z m",
             );
-            assert_eq!(m1.rotate(), m2);
+            assert_eq!(m1.rotated(), m2);
             Ok(())
         }
         /// rotating 4 times returns original
@@ -147,7 +160,10 @@ mod tests {
                 "a b c d e f g
                 h i j k l m n",
             );
-            assert_eq!(matrix.clone(), matrix.rotate().rotate().rotate().rotate());
+            assert_eq!(
+                matrix.clone(),
+                matrix.rotated().rotated().rotated().rotated()
+            );
             Ok(())
         }
     }
