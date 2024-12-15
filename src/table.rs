@@ -7,9 +7,10 @@ use std::str::Chars;
 pub struct Table {
     pub inner: Vec<Vec<char>>,
 }
+pub type Coords = (usize, usize);
 
 impl Table {
-    pub fn empty((rows, columns): (usize, usize)) -> Table {
+    pub fn empty((rows, columns): Coords) -> Table {
         Table {
             inner: vec![vec!['.'; rows]; columns],
         }
@@ -38,10 +39,10 @@ impl Index<usize> for Table {
     }
 }
 
-impl Index<(usize, usize)> for Table {
+impl Index<Coords> for Table {
     type Output = char;
 
-    fn index(&self, (x, y): (usize, usize)) -> &Self::Output {
+    fn index(&self, (x, y): Coords) -> &Self::Output {
         &self.inner[x][y]
     }
 }
@@ -51,8 +52,8 @@ impl IndexMut<usize> for Table {
         &mut self.inner[index]
     }
 }
-impl IndexMut<(usize, usize)> for Table {
-    fn index_mut(&mut self, (x, y): (usize, usize)) -> &mut Self::Output {
+impl IndexMut<Coords> for Table {
+    fn index_mut(&mut self, (x, y): Coords) -> &mut Self::Output {
         &mut self.inner[x][y]
     }
 }
@@ -88,7 +89,7 @@ impl Table {
         result
     }
 
-    pub fn dimensions(&self) -> (usize, usize) {
+    pub fn dimensions(&self) -> Coords {
         let len_0 = self[0].len();
         for i in 1..self.inner.len() {
             assert_eq!(len_0, self[i].len())
@@ -96,7 +97,7 @@ impl Table {
         (self.inner.len(), len_0)
     }
 
-    pub fn swap(&mut self, from: (usize, usize), to: (usize, usize)) {
+    pub fn swap(&mut self, from: Coords, to: Coords) {
         let temp = self[from];
         self[from] = self[to];
         self[to] = temp
