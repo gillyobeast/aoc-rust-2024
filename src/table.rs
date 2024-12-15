@@ -1,4 +1,5 @@
 use std::fmt::{Debug, Formatter};
+use std::ops::{Index, IndexMut};
 use std::slice::Iter;
 use std::str::Chars;
 
@@ -26,6 +27,33 @@ impl Debug for Table {
         }
 
         f.write_str(&out)
+    }
+}
+
+impl Index<usize> for Table {
+    type Output = Vec<char>;
+
+    fn index(&self, index: usize) -> &Self::Output {
+        &self.inner[index]
+    }
+}
+
+impl Index<(usize, usize)> for Table {
+    type Output = char;
+
+    fn index(&self, (x, y): (usize, usize)) -> &Self::Output {
+        &self.inner[x][y]
+    }
+}
+
+impl IndexMut<usize> for Table {
+    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
+        &mut self.inner[index]
+    }
+}
+impl IndexMut<(usize, usize)> for Table {
+    fn index_mut(&mut self, (x, y): (usize, usize)) -> &mut Self::Output {
+        &mut self.inner[x][y]
     }
 }
 
@@ -61,11 +89,17 @@ impl Table {
     }
 
     pub fn dimensions(&self) -> (usize, usize) {
-        let len_0 = self.inner[0].len();
+        let len_0 = self[0].len();
         for i in 1..self.inner.len() {
-            assert_eq!(len_0, self.inner[i].len())
+            assert_eq!(len_0, self[i].len())
         }
         (self.inner.len(), len_0)
+    }
+
+    pub fn swap(&mut self, from: (usize, usize), to: (usize, usize)) {
+        let temp = self[from];
+        self[from] = self[to];
+        self[to] = temp
     }
 }
 
