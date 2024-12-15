@@ -1,6 +1,5 @@
 advent_of_code::solution!(15);
 use anyhow::Result;
-
 pub fn part_one(input: &str) -> Result<usize> {
     unimplemented!()
 }
