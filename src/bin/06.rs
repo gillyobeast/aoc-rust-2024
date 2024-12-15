@@ -14,7 +14,7 @@ pub fn part_one(input: &str) -> Result<usize> {
 
 fn count_visited(table: Table) -> Result<usize> {
     let mut sum = 0;
-    for row in table {
+    for row in table.inner {
         for char in row {
             if char == VISITED {
                 sum += 1
@@ -33,9 +33,9 @@ fn map_visited_points(mut table: Table) -> Result<Table> {
         // find the row containing cursor
         let row_num = find_cursor_row(&table)?;
         // if you reach the end, return
-        let row = &table[row_num];
+        let row = &table.inner[row_num];
         let done = !row_contains_block_after_cursor(row);
-        table[row_num] = advance_cursor_to_next_block_or_end(row)?;
+        table.inner[row_num] = advance_cursor_to_next_block_or_end(row)?;
         if done {
             break;
         }
@@ -96,8 +96,8 @@ fn block_position(row: &[char]) -> Option<usize> {
 }
 
 fn find_cursor_row(table: &Table) -> Result<usize> {
-    for row in 0..table.len() {
-        if table[row].contains(&CURSOR) {
+    for row in 0..table.inner.len() {
+        if table.inner[row].contains(&CURSOR) {
             return Ok(row);
         }
     }
@@ -122,7 +122,7 @@ mod tests {
             let mut table = Table::empty((3, 4));
             assert!(find_cursor_row(&table).is_err());
 
-            table[2][2] = CURSOR;
+            table.inner[2][2] = CURSOR;
             assert_eq!(find_cursor_row(&table)?, 2);
 
             Ok(())

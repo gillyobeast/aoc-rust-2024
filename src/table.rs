@@ -1,10 +1,10 @@
 use std::fmt::{Debug, Formatter};
-use std::ops::{Index, IndexMut};
+use std::slice::Iter;
 use std::str::Chars;
 
 #[derive(Clone, PartialEq)]
 pub struct Table {
-    inner: Vec<Vec<char>>,
+    pub inner: Vec<Vec<char>>,
 }
 
 impl Table {
@@ -13,46 +13,12 @@ impl Table {
             inner: vec![vec!['.'; rows]; columns],
         }
     }
-
-    pub fn len(&self) -> usize {
-        self.inner.len()
-    }
-}
-
-impl Iterator for Table {
-    type Item = Vec<char>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.inner.iter().cloned().next()
-    }
-}
-
-impl Iterator for &Table {
-    type Item = Vec<char>;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        self.inner.iter().cloned().next()
-    }
-}
-
-impl Index<usize> for Table {
-    type Output = Vec<char>;
-
-    fn index(&self, index: usize) -> &Self::Output {
-        self.inner.index(index)
-    }
-}
-
-impl IndexMut<usize> for Table {
-    fn index_mut(&mut self, index: usize) -> &mut Self::Output {
-        self.inner.index_mut(index)
-    }
 }
 
 impl Debug for Table {
     fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
         let mut out = "\n".to_string();
-        for row in self {
+        for row in &self.inner {
             for column in row {
                 out += column.to_string().as_ref()
             }
@@ -64,6 +30,10 @@ impl Debug for Table {
 }
 
 impl Table {
+    pub fn iter(&self) -> Iter<Vec<char>> {
+        self.inner.iter()
+    }
+
     pub fn parse(input: &str) -> Self {
         Self {
             inner: input
@@ -79,7 +49,7 @@ impl Table {
 
     pub fn rotated(self) -> Self {
         let (rows, columns) = self.dimensions();
-        let matrix = self;
+        let matrix = self.inner;
 
         let mut result = Self::empty((rows, columns));
         for row_num in 0..rows {
@@ -91,12 +61,11 @@ impl Table {
     }
 
     pub fn dimensions(&self) -> (usize, usize) {
-        let len_0 = self[0].len();
-        let self_len = self.len();
-        for i in 1..self_len {
-            assert_eq!(len_0, self[i].len())
+        let len_0 = self.inner[0].len();
+        for i in 1..self.inner.len() {
+            assert_eq!(len_0, self.inner[i].len())
         }
-        (self_len, len_0)
+        (self.inner.len(), len_0)
     }
 }
 
