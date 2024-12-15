@@ -7,6 +7,7 @@ use std::str::Chars;
 pub struct Table {
     pub inner: Vec<Vec<char>>,
 }
+
 pub type Coords = (usize, usize);
 
 impl Table {
@@ -63,6 +64,12 @@ impl Table {
         self.inner.iter()
     }
 
+    pub fn find(&self, target: char) -> Option<Coords> {
+        let row = self.iter().position(|row| row.contains(&target))?;
+        let col = self[row].iter().position(|char| char == &target)?;
+        Some((row, col))
+    }
+
     pub fn parse(input: &str) -> Self {
         Self {
             inner: input
@@ -97,7 +104,12 @@ impl Table {
         (self.inner.len(), len_0)
     }
 
-    pub fn swap(&mut self, from: Coords, to: Coords) {
+    pub fn swap(self, from: Coords, to: Coords) -> Self {
+        let mut result = self.clone();
+        result.swap_mut(from, to);
+        result
+    }
+    pub fn swap_mut(&mut self, from: Coords, to: Coords) {
         let temp = self[from];
         self[from] = self[to];
         self[to] = temp
